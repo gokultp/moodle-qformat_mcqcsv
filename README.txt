@@ -8,7 +8,7 @@ This plugin allow import of questions with images using the GIFT format syntax.
 Written by Gokul T P
 
 To install using git, type this command in the root of your Moodle install
-    git clone git://github.com//jmvedrine/moodle-qformat_giftmedia.git question/format/giftmedia
+    git clone git://github.com/gokultp/giftdocx question/format/giftmedia
 Another way to install is to download the zip file, unzip it, and place it in the directory
 moodle/question/format/. (You will need to rename the directory moodle-qformat_giftdocx-master to giftdocx).
 
