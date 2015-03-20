@@ -15,19 +15,36 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information for the GIFT with media format question importer.
+ * Strings for component 'qformat_giftmedia', language 'en'
  *
- * @package    qformat_mcqcsv
- * @copyright  2015 Gokul TP
+ * @package    qformat_giftdocx
+ * @copyright  2015 Gokul T P
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'qformat_mcqcsv';
-$plugin->version   = 2015021801;
-$plugin->release   = '1.01 for Moodle 2.6';
-$plugin->maturity  = MATURITY_STABLE;
-$plugin->dependencies = array(
-    'qformat_gift' => 2012112900
-);
+
+$dir=$this->tempdir;
+$filename = $dir."/mcq.csv";
+$handle = fopen($filename, "rb");
+$contents = fread($handle, filesize($filename));
+
+$rows = explode("\n",$contents);
+$txt = "";
+for($j=0;$j<count($rows)-1;$j++){
+    $cols = explode(",",$rows[$j]);
+    $txt .= "::".$cols[0]."::".$cols[1]."\r\n{=".$cols[2]."#".$cols[3];
+    for($i=4;$i<count($cols);$i+=2){
+        $txt .= "~".$cols[$i]."#".$cols[$i+1];
+    }
+    $txt .= "}\r\n\n";
+ }
+//echo $txt;
+fclose($handle);
+
+$fp = fopen($dir.'/t.txt', 'w');
+        fwrite($fp,$txt);
+        
+        fclose($fp);
+
+?>

@@ -15,19 +15,14 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information for the GIFT with media format question importer.
+ * Strings for component 'qformat_giftmedia', language 'en'
  *
- * @package    qformat_mcqcsv
- * @copyright  2015 Gokul TP
+ * @package    qformat_giftdocx
+ * @copyright  2015 Gokul T P
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
-$plugin->component = 'qformat_mcqcsv';
-$plugin->version   = 2015021801;
-$plugin->release   = '1.01 for Moodle 2.6';
-$plugin->maturity  = MATURITY_STABLE;
-$plugin->dependencies = array(
-    'qformat_gift' => 2012112900
-);
+$string['pluginname'] = 'Mutiple choice questions from csv files';
+$string['pluginname_help'] = 'Mutiple choice questions from csv files.';
+$string['pluginname_link'] = 'qformat/mcqcsv';
+$string['nogiftfile'] = 'Unable to find any question';

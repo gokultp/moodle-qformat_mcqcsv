@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * GIFT with docx format question importer.
+ * Multiple choice question with csv format question importer.
  *
- * @package    qformat_giftdocx
+ * @package    qformat_mcqcsv
  * @copyright  2013 Jean-Michel Vedrine
  * @copyright  2015 Gokul T P
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -60,7 +60,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright  2003 Paul Tsuchido Shew
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class qformat_giftdocx extends qformat_gift {
+class qformat_mcqcsv extends qformat_gift {
     /** @var string path to the temporary directory. */
     public $tempdir = '';
     /**
@@ -76,7 +76,7 @@ class qformat_giftdocx extends qformat_gift {
     }
 
     public function mime_type() {
-        return mimeinfo('type', '.docx');
+        return mimeinfo('type', '.csv');
     }
 
     /**
@@ -158,7 +158,7 @@ class qformat_giftdocx extends qformat_gift {
     }
 
     public function export_file_extension() {
-        return '.docx';
+        return '.csv';
     }
 
     protected function parse_text_with_format($text, $defaultformat = FORMAT_MOODLE) {
@@ -182,17 +182,17 @@ class qformat_giftdocx extends qformat_gift {
      */
     public function readdata($filename) {
         $unique_code = time();
-        $this->tempdir = make_temp_directory('giftdocx/' . $unique_code);
+        $this->tempdir = make_temp_directory('mcqcsv/' . $unique_code);
         if (is_readable($filename)) {
-            if (!copy($filename, $this->tempdir . '/gift.docx')) {
+            if (!copy($filename, $this->tempdir . '/mcq.csv')) {
                 $this->error(get_string('cannotcopybackup', 'question'));
                 fulldelete($this->tempdir);
                 return false;
             }
-            if (unzip_file($this->tempdir . '/gift.docx', '', false)) {
+            
                 // Search for a text file in the zip archive.
                 // TODO ? search it, even if it is not a root level ?
-                include('docx.php');
+                include('csv.php');
                 $filenames = array();
                 $iterator = new DirectoryIterator($this->tempdir);
                 foreach ($iterator as $fileinfo) {
@@ -206,10 +206,7 @@ class qformat_giftdocx extends qformat_gift {
                     $this->error(get_string('nogiftfile', 'giftmedia'));
                     fulldelete($this->temp_dir);
                 }
-            } else {
-                $this->error(get_string('cannotunzip', 'question'));
-                fulldelete($this->temp_dir);
-            }
+            
         } else {
             $this->error(get_string('cannotreaduploadfile', 'error'));
             fulldelete($this->tempdir);
